@@ -89,4 +89,28 @@ const createSignupWindow = (csrf) => {
 const setup = (csrf) => {
     const loginButton = document.querySelector("#loginButton");
     const signupButton = document.querySelector("#signupButton");
+
+    signupButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        createSignupWindow(csrf);
+        return false;
+    });
+
+    loginButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        createLoginWindow(csrf);
+        return false;
+    });
+
+    createLoginWindow(csrf);
 };
+
+const getToken = () => {
+    sendAjax('GET', '/getToken', null, (result) => {
+        setup(result.csrfToken);
+    });
+};
+
+$(document).ready(function() {
+    getToken();
+});
