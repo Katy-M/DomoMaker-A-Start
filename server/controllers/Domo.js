@@ -13,13 +13,14 @@ const makerPage = (req, res) => {
 };
 
 const makeDomo = (req, res) => {
-  if (!req.body.name || !req.body.age) {
-    return res.status(400).json({ error: 'RAWR! Both name and age are required.' });
+  if (!req.body.name || !req.body.age || !req.body.bio) {
+    return res.status(400).json({ error: 'RAWR! All fields are required.' });
   }
   const domoData = {
     name: req.body.name,
     age: req.body.age,
     owner: req.session.account._id,
+    bio: req.body.bio,
   };
 
   const newDomo = new Domo.DomoModel(domoData);
